@@ -1,0 +1,27 @@
+name: Renovador Automatico de Midias Streamtape
+
+on:
+  schedule:
+    # Executa a cada 20 dias às 03:00 UTC
+    - cron: '0 3 */20 * *'
+  workflow_dispatch: # Adiciona o botão para testar manualmente quando quiser
+
+jobs:
+  renovar-conteudos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar o Repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar o Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar Dependências
+        run: |
+          pip install requests supabase
+
+      - name: Executar Renovador
+        run: |
+          python renovar_streamtape.py
